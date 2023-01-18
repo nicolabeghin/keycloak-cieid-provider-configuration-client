@@ -6,8 +6,8 @@ const config = {
     ...process.env
 }
 
-const SPID_PREFIX = 'CIED ';
-const SPID_ALIAS_PREFIX = 'cied-';
+const SPID_PREFIX = 'CIEID ';
+const SPID_ALIAS_PREFIX = 'cieid-';
 exports.config = config
 
 exports.usernameMapperTemplate = require('../template/username_mm.json')
