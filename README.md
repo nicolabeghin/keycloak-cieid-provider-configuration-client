@@ -4,6 +4,8 @@ A NodeJS client to automatically configure a Keycloak instance already setup wit
 * creates Keycloak configuration for CIE ID Testing (https://preproduzione.idserver.servizicie.interno.gov.it/idp/shibboleth?Metadata)
 * creates Keycloak configuration for CIE ID Production (https://idserver.servizicie.interno.gov.it/idp/shibboleth?Metadata)
 
+![image](https://user-images.githubusercontent.com/2743637/213274003-23f10d6d-8092-418c-bccf-9df100884312.png)
+
 ## Requirements
 Docker or `node` and `npm`
 
