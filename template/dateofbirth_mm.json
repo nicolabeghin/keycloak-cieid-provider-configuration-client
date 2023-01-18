@@ -1,0 +1,11 @@
+{
+    "name": "Date Of Birth",
+    "identityProviderAlias": "CHANGE-IT",
+    "identityProviderMapper": "cieid-user-attribute-idp-mapper",
+    "config": {
+        "syncMode": "INHERIT",
+        "user.attribute": "cieid-dateOfBirth",
+        "attribute": "dateOfBirth",
+        "attribute.name": "dateOfBirth"
+    }
+}

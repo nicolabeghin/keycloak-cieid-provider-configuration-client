@@ -1,0 +1,11 @@
+{
+    "name": "Fiscal Number",
+    "identityProviderAlias": "CHANGE-IT",
+    "identityProviderMapper": "cieid-user-attribute-idp-mapper",
+    "config": {
+        "syncMode": "INHERIT",
+        "user.attribute": "cieid-fiscalNumber",
+        "attribute": "fiscalNumber",
+        "attribute.name": "fiscalNumber"
+    }
+}

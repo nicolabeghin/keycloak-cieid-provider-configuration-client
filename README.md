@@ -1,0 +1,36 @@
+# Keycloak CIE ID providers configuration client
+A NodeJS client to automatically configure a Keycloak instance already setup with [keycloak-cieid-provider](https://github.com/lscorcia/keycloak-cieid-provider)
+
+* creates Keycloak configuration for CIE ID Testing (https://preproduzione.idserver.servizicie.interno.gov.it/idp/shibboleth?Metadata)
+* creates Keycloak configuration for CIE ID Production (https://idserver.servizicie.interno.gov.it/idp/shibboleth?Metadata)
+
+## Requirements
+Docker or `node` and `npm`
+
+## Configuration
+```
+npm install
+```
+
+copy `.env-example` to `.env`, configure it and wipe out the comments then
+
+## Running the tool
+```
+npm run create-idps
+```
+
+If you want to have official CIE Testing enabled, set the following `.env` file properties
+
+```
+createCiedTestingIdP = true 
+```
+
+## Authentication flow
+By default, the new IdPs are created with a SPID-specific Authentication Flow, as per https://github.com/italia/spid-keycloak-provider/wiki/Configuring-the-Authentication-Flow - this is named `First Broker Login (SPID)` (ref. [idpmodel.json#L11](https://github.com/nicolabeghin/keycloak-cieid-provider-configuration-client/blob/master/template/idpmodel.json#L11)) and must be created before running the client.
+
+<img width="1455" alt="image" src="https://user-images.githubusercontent.com/2743637/212534098-d6add32d-db1b-4c63-b203-f37f78fee8f9.png">
+
+
+## Credits
+* forked from https://github.com/GermanoGiudici/keycloak-spid-provider-configuration-client (kudos to @GermanoGiudici)
+* this project is released under the Apache License 2.0, same as the main Keycloak package.
