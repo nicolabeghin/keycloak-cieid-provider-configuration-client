@@ -1,6 +1,7 @@
 require('dotenv').config()
 const slugify = require('slugify')
 const fs = require('fs')
+const { v4: uuidv4 } = require('uuid');
 
 const config = {
     ...process.env
@@ -34,7 +35,7 @@ exports.enrichIdpWithConfigData = function (idp) {
         organizationNames: config.organizationNames,
         organizationDisplayNames: config.organizationDisplayNames,
         organizationUrls: config.organizationUrls,
-        attributeConsumingServiceName: config.attributeConsumingServiceName,
+        attributeConsumingServiceName: 'urn:uuid:'+uuidv4(),
         // ipaCategory: '',
         administrativeContactCompany: config.organizationNames.split("|")[1],
         administrativeContactIpaCode: config.otherContactIpaCode,
