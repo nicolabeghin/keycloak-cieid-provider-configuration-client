@@ -20,7 +20,8 @@ var getOfficialSpididPsMetadata$ = of(enrichIdpWithConfigData({
 if (config.createCiedTestingIdP === 'true') {
     let spidDemoIdPOfficialMetadata = {
         entity_name: config.ciedTestingIdPAlias,
-        metadata_url: config.cieidTestingIdPMetadataURL
+        metadata_url: config.cieidTestingIdPMetadataURL,
+        enabled: true
     }
 
     getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(enrichIdpWithConfigData(spidDemoIdPOfficialMetadata)))
@@ -48,6 +49,7 @@ var enrichedModels$ = getKeycloakImportConfigModels$
         let firstLevel = {
             alias: idPOfficialMetadata.alias,
             displayName: idPOfficialMetadata.displayName,
+            enabled: idPOfficialMetadata.enabled
         }
         let merged = {...idPTemplate, ...firstLevel}
         merged.config = configIdp

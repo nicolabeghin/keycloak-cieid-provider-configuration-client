@@ -46,7 +46,8 @@ exports.enrichIdpWithConfigData = function (idp) {
         // administrativeContactProvince: '',
         administrativeContactCountry: 'IT',
         administrativeContactPhone: config.otherContactPhone,
-        administrativeContactEmail: config.otherContactEmail
+        administrativeContactEmail: config.otherContactEmail,
+        enabled: false,
         // technicalContactCompany: '',
         // technicalContactVatNumber: '',
         // technicalContactFiscalCode: '',
