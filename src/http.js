@@ -43,7 +43,7 @@ exports.httpGrabKeycloaktoken = httpGrabKeycloaktoken
 
 exports.httpCallKeycloakImportConfig = function (idPsMetadataUrl) {
     return httpGrabKeycloaktoken().then(token => {
-        let data = JSON.stringify({"providerId": "spid", "fromUrl": idPsMetadataUrl});
+        let data = JSON.stringify({"providerId": "cieid", "fromUrl": idPsMetadataUrl});
         let axiosConfig = {
             httpsAgent : agent,
             method: 'post',
