@@ -1,10 +1,6 @@
-FROM node:lts
-ENV NODE_ENV=production
+FROM node:lts-alpine
+ENV NODE_OPTIONS=--dns-result-order=ipv4first
 WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", ".env", "./"]
-RUN npm install --production --silent && mv node_modules ../
 COPY . .
-EXPOSE 3000
-RUN chown -R node /usr/src/app
-USER node
+RUN npm install --omit=dev
 CMD ["node", "createidps.js"]
