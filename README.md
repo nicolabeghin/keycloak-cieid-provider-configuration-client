@@ -28,16 +28,16 @@ Make sure you can uploaded the spid-sp-test metadata.xml to a Keycloak-reachable
 
     docker run --rm -it italia/spid-sp-test --idp-metadata > spid-sp-test.xml
 
+## Running the tool
+### Docker
+Easiest way by leveraging Docker:
 
-## Configuration
+    make
+
+### Without Docker
+If you have NodeJS installed 
 ```
 npm install
-```
-
-copy `.env-example` to `.env`, configure it and wipe out the comments then
-
-## Running the tool
-```
 npm run create-idps
 ```
 
