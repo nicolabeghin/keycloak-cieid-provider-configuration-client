@@ -10,6 +10,26 @@ A NodeJS client to automatically configure a Keycloak instance already setup wit
 Docker or `node` and `npm`
 
 ## Configuration
+Copy `.env-example` to `.env`, configure it and wipe out the comments
+If you want to have official CIE Testing enabled, set the following `.env` file properties
+
+```
+createCiedTestingIdP = true 
+```
+
+If you want to use [spid-sp-test](https://github.com/italia/spid-sp-test), set the following `.env` file properties
+
+```
+createSpidSpTestIdP = true
+spidSpTestIdPMetadataURL = https://yourdomain.com/spid-sp-test.xml
+```
+
+Make sure you can uploaded the spid-sp-test metadata.xml to a Keycloak-reachable URL as above. The XML file can be generated with 
+
+    docker run --rm -it italia/spid-sp-test --idp-metadata > spid-sp-test.xml
+
+
+## Configuration
 ```
 npm install
 ```
@@ -19,12 +39,6 @@ copy `.env-example` to `.env`, configure it and wipe out the comments then
 ## Running the tool
 ```
 npm run create-idps
-```
-
-If you want to have official CIE Testing enabled, set the following `.env` file properties
-
-```
-createCiedTestingIdP = true 
 ```
 
 ## Authentication flow

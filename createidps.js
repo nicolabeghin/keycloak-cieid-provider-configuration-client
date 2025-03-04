@@ -23,9 +23,16 @@ if (config.createCiedTestingIdP === 'true') {
         metadata_url: config.cieidTestingIdPMetadataURL,
         enabled: true
     }
-
     getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(enrichIdpWithConfigData(spidDemoIdPOfficialMetadata)))
+}
 
+if (config.createSpidSpTestIdP === 'true') {
+    let spidSpTestIdPOfficialMetadata = {
+        entity_name: config.spidSpTestIdPAlias,
+        metadata_url: config.spidSpTestIdPMetadataURL,
+        enabled: true
+    } 
+    getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(enrichIdpWithConfigData(spidSpTestIdPOfficialMetadata)))
 }
 
 //getOfficialSpididPsMetadata$.subscribe(console.log)
