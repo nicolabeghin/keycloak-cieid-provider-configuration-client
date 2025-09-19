@@ -18,7 +18,7 @@ const agent = new https.Agent({
 const tokenConfig = {
     httpsAgent : agent,
     method: 'post',
-    url: config.keycloakServerBaseURL + '/auth/realms/' + config.adminRealm + '/protocol/openid-connect/token',
+    url: config.keycloakServerBaseURL + '/realms/' + config.adminRealm + '/protocol/openid-connect/token',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },
@@ -47,7 +47,7 @@ exports.httpCallKeycloakImportConfig = function (idPsMetadataUrl) {
         let axiosConfig = {
             httpsAgent : agent,
             method: 'post',
-            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/import-config',
+            url: config.keycloakServerBaseURL + '/admin/realms/' + config.realm + '/identity-provider/import-config',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ exports.httpCallKeycloakCreateIdP = function (idPModel) {
         let axiosConfig = {
             httpsAgent : agent,
             method: 'post',
-            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/instances',
+            url: config.keycloakServerBaseURL + '/admin/realms/' + config.realm + '/identity-provider/instances',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ exports.httpCallKeycloakDeleteIdP = function (idPAlias) {
         let axiosConfig = {
             httpsAgent : agent,
             method: 'delete',
-            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/instances/' + idPAlias,
+            url: config.keycloakServerBaseURL + '/admin/realms/' + config.realm + '/identity-provider/instances/' + idPAlias,
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ exports.httpCallKeycloakGetIpds = function () {
         let axiosConfig = {
             httpsAgent : agent,
             method: 'get',
-            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/instances',
+            url: config.keycloakServerBaseURL + '/admin/realms/' + config.realm + '/identity-provider/instances',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
@@ -128,7 +128,7 @@ exports.httpCallKeycloakGetIpdDescription = function (idpAlias) {
     let axiosConfig = {
         httpsAgent : agent,
         method: 'get',
-        url: config.keycloakServerBaseURL + '/auth/realms/' + config.realm + '/broker/' + encodeURIComponent(idpAlias) + '/endpoint/descriptor',
+        url: config.keycloakServerBaseURL + '/realms/' + config.realm + '/broker/' + encodeURIComponent(idpAlias) + '/endpoint/descriptor',
     };
     return axios(axiosConfig)
         .catch(function (error) {
@@ -155,7 +155,7 @@ const httpCallKeycloakCreateMapper = function (idPAlias, mapperModel) {
         let axiosConfig = {
             httpsAgent : agent,
             method: 'post',
-            url: config.keycloakServerBaseURL + '/auth/admin/realms/' + config.realm + '/identity-provider/instances/' + idPAlias + '/mappers',
+            url: config.keycloakServerBaseURL + '/admin/realms/' + config.realm + '/identity-provider/instances/' + idPAlias + '/mappers',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
