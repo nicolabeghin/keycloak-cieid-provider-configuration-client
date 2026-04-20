@@ -170,12 +170,23 @@ const httpCallKeycloakCreateMapper = function (idPAlias, mapperModel) {
 }
 
 const handleHttpError = function(error) {
-    if (undefined !== error.response.data.errorMessage) {
-        console.error(error.response.data.errorMessage);
+    if (error.response) {
+        const {status, statusText, data, config: reqConfig} = error.response;
+        console.error(`HTTP ${status} ${statusText || ''} on ${reqConfig?.method?.toUpperCase?.()} ${reqConfig?.url}`);
+        if (data && typeof data === 'object') {
+            if (data.errorMessage) console.error('errorMessage:', data.errorMessage);
+            if (data.error) console.error('error:', data.error);
+            if (data.error_description) console.error('error_description:', data.error_description);
+            console.error('response body:', JSON.stringify(data));
+        } else if (data) {
+            console.error('response body:', String(data));
+        }
         return;
     }
-    if (undefined !== error.response.data.error) {
-        console.error(error.response.data.error);
+    if (error.request) {
+        console.error(`No response received (network/timeout) on ${error.config?.method?.toUpperCase?.()} ${error.config?.url}`);
+        console.error('cause:', error.code || error.message);
         return;
     }
+    console.error('Request setup error:', error.message);
 }
