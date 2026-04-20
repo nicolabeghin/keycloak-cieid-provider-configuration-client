@@ -1,5 +1,5 @@
 const {from, of, concat} = require('rxjs')
-const {concatMap, map, mergeMap, take, delay} = require('rxjs/operators')
+const {concatMap, map, mergeMap, take, delay, filter} = require('rxjs/operators')
 const {config, patchTemplate, enrichIdpWithConfigData} = require('./src/common')
 const {
     httpCallKeycloakImportConfig,
@@ -47,15 +47,21 @@ var getKeycloakImportConfigModels$ = deleteKeycloakSpidIdPs$
     .pipe(concatMap(spidIdPOfficialMetadata => of(spidIdPOfficialMetadata)
         .pipe(
             delay(1500), // workaround for ClosedChannelException (HTTP error 503) from Keycloak 26.1
-            mergeMap(spidIdPOfficialMetadata => 
+            mergeMap(spidIdPOfficialMetadata =>
                 from(httpCallKeycloakImportConfig(spidIdPOfficialMetadata.metadata_url)
-                    .then(httpResponse => {return [spidIdPOfficialMetadata, httpResponse.data];}))
+                    .then(httpResponse => {
+                        if (!httpResponse) {
+                            return null;
+                        }
+                        return [spidIdPOfficialMetadata, httpResponse.data];
+                    }))
             )
         )
     ));
 
 //trasformazione ed arricchimento => modello per creare l'idP su keycloak
 var enrichedModels$ = getKeycloakImportConfigModels$
+    .pipe(filter(item => item !== null))
     .pipe(map(spidIdPOfficialMetadataWithImportConfigModel => {
         let [idPOfficialMetadata, importConfigModel] = spidIdPOfficialMetadataWithImportConfigModel
         importConfigModel.validateSignature = true; // override import config from metadata
