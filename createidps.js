@@ -30,8 +30,11 @@ if (config.createSpidSpTestIdP === 'true') {
     let spidSpTestIdPOfficialMetadata = {
         entity_name: config.spidSpTestIdPAlias,
         metadata_url: config.spidSpTestIdPMetadataURL,
-        enabled: true
-    } 
+        enabled: true,
+        fallbackSSOUrl: config.spidSpTestIdPSSOUrl,
+        fallbackEntityId: config.spidSpTestIdPEntityId,
+        fallbackSigningCert: config.spidSpTestIdPSigningCert
+    }
     getOfficialSpididPsMetadata$ = concat(getOfficialSpididPsMetadata$, of(enrichIdpWithConfigData(spidSpTestIdPOfficialMetadata)))
 }
 
@@ -51,17 +54,26 @@ var getKeycloakImportConfigModels$ = deleteKeycloakSpidIdPs$
                 from(httpCallKeycloakImportConfig(spidIdPOfficialMetadata.metadata_url)
                     .then(httpResponse => {
                         if (!httpResponse) {
+                            if (spidIdPOfficialMetadata.fallbackSSOUrl) {
+                                console.log('import-config failed for ' + spidIdPOfficialMetadata.alias + ', using fallback direct config');
+                                return [spidIdPOfficialMetadata, {
+                                    singleSignOnServiceUrl: spidIdPOfficialMetadata.fallbackSSOUrl,
+                                    singleLogoutServiceUrl: spidIdPOfficialMetadata.fallbackSSOUrl,
+                                    idpEntityId: spidIdPOfficialMetadata.fallbackEntityId,
+                                    signingCertificate: spidIdPOfficialMetadata.fallbackSigningCert
+                                }];
+                            }
                             return null;
                         }
                         return [spidIdPOfficialMetadata, httpResponse.data];
-                    }))
+                    })
+                )
             )
         )
-    ));
+    )).pipe(filter(item => item !== null));
 
 //trasformazione ed arricchimento => modello per creare l'idP su keycloak
 var enrichedModels$ = getKeycloakImportConfigModels$
-    .pipe(filter(item => item !== null))
     .pipe(map(spidIdPOfficialMetadataWithImportConfigModel => {
         let [idPOfficialMetadata, importConfigModel] = spidIdPOfficialMetadataWithImportConfigModel
         importConfigModel.validateSignature = true; // override import config from metadata
